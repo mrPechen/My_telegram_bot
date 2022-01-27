@@ -1,0 +1,57 @@
+version: "3.1"
+
+services:
+
+  db:
+    container_name: database_final_project
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: $PGPASSWORD
+      POSTGRES_USER: $PGUSER
+      POSTGRES_DB: $DATABASE
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - botnet
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  django:
+    container_name: djangoproject_final
+    build:
+      context: .
+    command: python3 django_app.py runserver 0.0.0.0:8000 --noreload
+    ports:
+      - "8000:8000"
+    networks:
+      - botnet
+    restart: always
+    env_file:
+      - ".env"
+    depends_on:
+      - db
+
+
+
+  tgbot:
+    container_name: bot_final_project
+    build:
+      context: .
+    command: python app.py
+    volumes:
+      - .:/src
+    networks:
+      - botnet
+    restart: always
+    env_file:
+      - ".env"
+    depends_on:
+      - db
+      - django
+
+
+
+networks:
+  botnet:
+    driver: bridge
