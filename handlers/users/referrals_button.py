@@ -35,7 +35,7 @@ async def back_to_menu(call: CallbackQuery):
     markup_user = menu_user()
     markup_admin = menu_admin()
     user = call.from_user.id
-    if user == 300645955 or 362089194:
+    if user == #User ID телеграм:
         await call.message.edit_reply_markup(markup_admin)
     else:
         await call.message.edit_reply_markup(markup_user)
