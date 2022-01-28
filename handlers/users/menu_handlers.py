@@ -13,7 +13,7 @@ from utils.db_api.db_commands import search_item, select_user, get_item
 @dp.message_handler(commands='menu')
 async def menu_categories(message: Message):
     user = message.from_user.id
-    if user == 300645955 or 362089194:
+    if user == #ID юзера телеграм :
         await message.answer(text="hi admin", reply_markup=menu_admin())
     else:
         await message.answer(text=f"Что желаешь {message.from_user.username}?", reply_markup=menu_user())
